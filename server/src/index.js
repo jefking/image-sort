@@ -10,6 +10,17 @@ function envInt(name, fallback) {
   return Number.isFinite(n) && n > 0 ? Math.floor(n) : fallback;
 }
 
+function formatBytes(bytes) {
+  const units = ['B', 'KiB', 'MiB', 'GiB', 'TiB'];
+  let v = bytes;
+  let i = 0;
+  while (v >= 1024 && i < units.length - 1) {
+    v /= 1024;
+    i += 1;
+  }
+  return `${i === 0 ? v.toFixed(0) : v.toFixed(1)} ${units[i]}`;
+}
+
 // Allow overrides for testing/dev; defaults match your requirements.
 const MAX_BUCKET_PHOTOS = envInt('MAX_BUCKET_PHOTOS', 1200);
 const MAX_BUCKET_BYTES = envInt('MAX_BUCKET_BYTES', 4 * 1024 * 1024 * 1024); // 4 GiB
@@ -245,7 +256,7 @@ app.post('/api/move', async (req, res) => {
     if (newTotalBytes > MAX_BUCKET_BYTES) {
       return res.status(409).json({
         error: 'BUCKET_FULL_BYTES',
-        message: `Bucket ${bucketName} cannot exceed 4 GiB.`
+        message: `Bucket ${bucketName} cannot exceed ${formatBytes(MAX_BUCKET_BYTES)}.`
       });
     }
 
@@ -257,7 +268,17 @@ app.post('/api/move', async (req, res) => {
 });
 
 const port = Number(process.env.PORT ?? DEFAULT_PORT);
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`[image-sort] server running on http://localhost:${port}`);
   console.log(`[image-sort] IMAGE_ROOT=${process.env.IMAGE_ROOT ?? '(not set)'}`);
+});
+
+server.on('error', (err) => {
+  if (err?.code === 'EADDRINUSE') {
+    console.error(`[image-sort] ERROR: Port ${port} is already in use.`);
+    console.error('[image-sort] Hint: run with a different port, e.g. PORT=6175 npm start');
+    process.exit(1);
+  }
+  console.error('[image-sort] server error:', err);
+  process.exit(1);
 });
