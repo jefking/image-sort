@@ -1,0 +1,207 @@
+:root {
+  --bg: #0b1020;
+  --panel: rgba(255, 255, 255, 0.06);
+  --panel2: rgba(255, 255, 255, 0.08);
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.7);
+  --danger: #ff5b5b;
+  --ok: #4de1a8;
+  --warn: #ffcc66;
+  --border: rgba(255, 255, 255, 0.12);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 800px at 10% 0%, rgba(96, 165, 250, 0.25), transparent),
+    radial-gradient(900px 600px at 90% 10%, rgba(52, 211, 153, 0.18), transparent), var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+}
+
+.app {
+  min-height: 100%;
+}
+
+.bucketBar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(12px);
+  background: rgba(11, 16, 32, 0.7);
+  border-bottom: 1px solid var(--border);
+}
+
+.bucketBar__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  gap: 12px;
+}
+
+.title {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.bucketBar__right {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--ghost {
+  background: transparent;
+}
+
+.bucketBar__buckets {
+  padding: 0 16px 14px 16px;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.bucket {
+  position: relative;
+  min-width: 220px;
+  max-width: 220px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.bucket--full {
+  border-color: rgba(255, 91, 91, 0.55);
+}
+
+.bucket--can {
+  outline: 2px solid rgba(77, 225, 168, 0.55);
+}
+
+.bucket--no {
+  outline: 2px solid rgba(255, 204, 102, 0.45);
+}
+
+.bucket__title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.bucket__meta {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.bucket__bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.bucket__barFill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(77, 225, 168, 0.85), rgba(96, 165, 250, 0.8));
+}
+
+.bucket__badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255, 91, 91, 0.95);
+  border: 1px solid rgba(255, 91, 91, 0.55);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.main {
+  padding: 18px 16px 28px 16px;
+}
+
+.hint {
+  color: var(--muted);
+  padding: 10px 0;
+}
+
+.error {
+  background: rgba(255, 91, 91, 0.12);
+  border: 1px solid rgba(255, 91, 91, 0.35);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.error__hint {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  margin: 8px 0 10px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.imageCard {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.imageCard:active {
+  cursor: grabbing;
+}
+
+.imageCard__img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.imageCard__caption {
+  padding: 10px 10px 0 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.imageCard__sub {
+  padding: 6px 10px 10px 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
