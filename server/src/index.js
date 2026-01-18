@@ -3,8 +3,16 @@ import express from 'express';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-const MAX_BUCKET_PHOTOS = 1200;
-const MAX_BUCKET_BYTES = 4 * 1024 * 1024 * 1024; // 4 GiB
+function envInt(name, fallback) {
+  const raw = process.env[name];
+  if (raw == null || raw === '') return fallback;
+  const n = Number(raw);
+  return Number.isFinite(n) && n > 0 ? Math.floor(n) : fallback;
+}
+
+// Allow overrides for testing/dev; defaults match your requirements.
+const MAX_BUCKET_PHOTOS = envInt('MAX_BUCKET_PHOTOS', 1200);
+const MAX_BUCKET_BYTES = envInt('MAX_BUCKET_BYTES', 4 * 1024 * 1024 * 1024); // 4 GiB
 const DEFAULT_PORT = 5174;
 
 const IMAGE_EXTS = new Set([

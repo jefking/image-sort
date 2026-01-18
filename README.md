@@ -21,6 +21,11 @@ Set the image folder you want to sort:
 
 - Example (your case): `IMAGE_ROOT=/home/jef/Pictures/theframe`
 
+Optional (mostly useful for testing):
+
+- `MAX_BUCKET_PHOTOS` (default `1200`)
+- `MAX_BUCKET_BYTES` (default `4294967296` = 4 GiB)
+
 ### Run (dev)
 
 In one terminal:
@@ -29,11 +34,19 @@ In one terminal:
 2. `npm install`
 3. `IMAGE_ROOT=/home/jef/Pictures/theframe npm run dev`
 
+If port `5174` is already taken, pick a different one:
+
+- `IMAGE_ROOT=/home/jef/Pictures/theframe PORT=6174 npm run dev`
+
 In another terminal:
 
 1. `cd client`
 2. `npm install`
 3. `npm run dev`
+
+If you changed the server port, point the client proxy at it:
+
+- `VITE_API_TARGET=http://localhost:6174 npm run dev`
 
 Then open the Vite URL (usually):
 
